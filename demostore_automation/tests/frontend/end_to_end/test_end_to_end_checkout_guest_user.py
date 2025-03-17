@@ -16,10 +16,21 @@ pytestmark = [pytest.mark.feregression, pytest.mark.fesmoke, pytest.mark.end_to_
 
 @pytest.mark.usefixtures("init_driver")
 class TestEndToEndCheckoutGuestUser:
-
+    """
+    A class representing End-To-End Checkout for Guest User.
+    Attributes:
+    driver : Selenium WebDriver
+    """
     @pytest.mark.tcid33
     @pytest.mark.pioneertcid3
     def test_end_to_end_checkout_guest_user(self):
+        """
+        Tests end to end product checkout for guest user.
+        Parameters:
+        None
+        Returns:
+        None
+        """
         # create objects
         home_page = HomePage(self.driver)
         header = Header(self.driver)
@@ -47,6 +58,9 @@ class TestEndToEndCheckoutGuestUser:
         coupon_code = MainConfigs.get_coupon_code('FREE_COUPON')
         cart_page.apply_coupon(coupon_code)
 
+        #Make sure coupon applied before clicking checkout
+        cart_page.check_coupon_applied()
+
         # proceed to checkout
         cart_page.click_on_proceed_to_checkout()
 
@@ -63,4 +77,8 @@ class TestEndToEndCheckoutGuestUser:
         print('********')
         print(order_number)
         print('********')
+
+
+
+
 
