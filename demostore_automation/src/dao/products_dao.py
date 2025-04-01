@@ -23,3 +23,10 @@ class ProductsDAO:
         rs_sql = self.db_helper.execute_select(sql)
 
         return random.sample(rs_sql, int(qty))
+
+    def get_product_by_id(self, product_id):
+
+        sql = f'''SELECT * FROM {self.db_helper.database}.{self.db_helper.table_prefix}posts 
+                  WHERE ID = {product_id};'''
+
+        return self.db_helper.execute_select(sql)
