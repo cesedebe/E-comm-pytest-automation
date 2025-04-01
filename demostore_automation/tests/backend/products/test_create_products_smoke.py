@@ -10,6 +10,10 @@ pytestmark = [pytest.mark.beregression, pytest.mark.besmoke, pytest.mark.product
 def test_create_1_simple_product():
     """
         Test case to create a simple product.
+        Parameters:
+        None
+        Returns:
+        None
     """
     # prepare payload for simple product
     product_name = generate_random_string(20)

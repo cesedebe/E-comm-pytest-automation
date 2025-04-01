@@ -33,7 +33,14 @@ def generate_random_email_and_password(domain='supersqa.com', email_prefix='test
     return random_info
 
 def generate_random_coupon_code(sufix=None, length=10):
-
+    """
+       Generates a random coupon
+       Parameters:
+       suffix (str): Suffix to use.
+       length(int): Length of coupon
+       Returns:
+       code (str): Random coupon code
+       """
     code = ''.join(random.choices(string.ascii_uppercase, k=length))
     if sufix:
         code += sufix
@@ -41,7 +48,15 @@ def generate_random_coupon_code(sufix=None, length=10):
     return code
 
 def generate_random_string(length=10, prefix=None, suffix=None):
-
+    """
+       Generates a random string
+       Parameters:
+       suffix (str): Suffix to use.
+       prefix(str): Prefix to use
+       length(int): Length of string
+       Returns:
+       random_string (str): Random string
+       """
     random_string = ''.join(random.choices(string.ascii_lowercase, k=length))
 
     if prefix:
