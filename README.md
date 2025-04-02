@@ -1,10 +1,8 @@
-# E-commerce Site Test Framework - Base
+# E-commerce Site Test Framework
 
-This repository contains an automated test framework base, designed for an e-commerce site built with WordPress and WooCommerce. The site utilizes the StoreFront theme and features both frontend and backend tests.
+This repository contains an automated test framework, designed for an e-commerce site built with WordPress and WooCommerce. The site utilizes the StoreFront theme and features both frontend and backend tests.
 
-This repo is to serve as a base to write add more tests and practice QA Automation.
-
-There are only 16 automated tests included in this base repo.
+This repository is to serve as a base to write add more tests and practice QA Automation.
 
 ## Features
 
