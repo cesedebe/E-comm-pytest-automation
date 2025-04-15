@@ -1,4 +1,4 @@
-# E-commerce Site Test Framework
+# E-commerce Website Test Framework
 
 This repository contains an automated test framework, designed for an e-commerce site built with WordPress and WooCommerce. The site utilizes the StoreFront theme and features both frontend and backend tests.
 
