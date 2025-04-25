@@ -121,10 +121,10 @@ These resources guide users through:
 1. Clone the repository (choose one based on your preferred CI/CD platform):
 ```bash
 # For GitHub
-git clone https://github.com/supersqa1/qa-bootcamp-framework.git
+git clone https://github.com/cesedebe/E-comm-pytest-automation.git
 
 # For GitLab
-git clone git@gitlab.com:ssqagroup1/qa-bootcamp-framework.git
+git clone git@gitlab.com:cesedebe/E-comm-pytest-automation.git
 
 cd qa-bootcamp-framework
 ```
