@@ -145,7 +145,7 @@ pip install -r requirements.txt
 
 4. Run tests:
 ```bash
-cd ssqatest
+cd demostore_automation
 python3 -m pytest tests
 ```
 
@@ -221,13 +221,13 @@ pytest -n 0 -m "not smoke" tests/  # Run all tests not marked with @pytest.mark.
 ## 📄 Test Structure
 
 This project separates test code and supporting logic into two main folders:
-- `ssqatest/`: Contains all tests (frontend, backend, health checks)
+- `demostore_automation/`: Contains all tests (frontend, backend, health checks)
 - `src/`: Contains reusable modules such as page objects, API utilities, data access, and custom Selenium extensions
 
 This separation helps maintain clean architecture and enables easier reuse of logic across test suites.
 
 ```
-ssqatest/
+demostore_automation/
 ├── tests/
 │   ├── frontend/     # UI automation tests
 │   ├── backend/      # API and database tests
@@ -261,7 +261,7 @@ HTML reports provide a straightforward way to view test results with basic infor
 #### Generating HTML Reports
 ```bash
 # Run tests with HTML report generation
-cd ssqatest
+cd demostore_automation
 python3 -m pytest tests --html=reports/report.html
 
 # View the report
@@ -283,7 +283,7 @@ JUnit XML reports are particularly useful for CI/CD integration and test result 
 #### Generating JUnit Reports
 ```bash
 # Run tests with JUnit XML report generation
-cd ssqatest
+cd demostore_automation
 python3 -m pytest tests --junitxml=reports/junit.xml
 ```
 
@@ -302,7 +302,7 @@ The process involves three sequential steps:
 
 1. First, run tests and collect Allure results:
 ```bash
-cd ssqatest
+cd demostore_automation
 python3 -m pytest tests --alluredir=./allure-results
 ```
 
