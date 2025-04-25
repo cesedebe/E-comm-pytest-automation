@@ -43,18 +43,6 @@ A professional-grade test automation framework designed for E-Commerce applicati
 
 ## 📸 Project Screenshots
 
-### CI/CD Pipelines
-<div align="center">
-  <img src="docs/images/gitlab-ci-pipeline.png" alt="GitLab CI Pipeline" width="700">
-  <p><em>GitLab CI pipeline showing parallel test execution and stages</em></p>
-  
-  <img src="docs/images/jenkins-pipeline.png" alt="Jenkins Pipeline" width="700">
-  <p><em>Jenkins pipeline running tests and publishing reports</em></p>
-  
-  <img src="docs/images/github-actions.png" alt="GitHub Actions" width="700">
-  <p><em>GitHub Actions workflow execution</em></p>
-</div>
-
 ### Test Reports
 <div align="center">
   <img src="docs/images/html-report.png" alt="HTML Report" width="700">
