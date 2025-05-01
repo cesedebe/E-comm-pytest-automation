@@ -149,4 +149,4 @@ class TestMyAccountPage:
         actual_title = myacct.get_my_account_page_title().strip()
 
         # compare actual to expected breadcrumb
-        assert ( actual_title == expected_title), f"Breadcrumb mismatch! Found: {actual_title} Expected: {expected_title}"
+        assert ( actual_title == expected_title), f"Title mismatch! Found: {actual_title} Expected: {expected_title}"
