@@ -42,3 +42,5 @@ class TestRegisterNewUser:
 
         # verify user is registered
         myacct_sin.verify_user_is_signed_in()
+
+        myacct_sin.verify_user_is_signed_out()
