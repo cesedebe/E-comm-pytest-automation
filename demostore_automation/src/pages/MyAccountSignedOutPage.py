@@ -39,3 +39,27 @@ class MyAccountSignedOutPage(MyAccountSignedOutPageLocators):
 
     def click_register_button(self):
         self.sl.wait_and_click(self.REGISTER_BTN)
+
+    def get_username_label(self):
+        return self.sl.wait_and_get_text(self.USERNAME_LABEL)
+
+    def get_password_label(self):
+        return self.sl.wait_and_get_text(self.PASSWORD_LABEL)
+
+    def get_login_form_heading(self):
+        return self.sl.wait_and_get_text(self.LOGIN_FORM_LABEL)
+
+    def get_registration_form_heading(self):
+        return self.sl.wait_and_get_text(self.REG_FORM_LABEL)
+
+    def get_reg_email_label(self):
+        return self.sl.wait_and_get_text(self.EMAIL_REG_LABEL)
+
+    def get_reg_password_label(self):
+        return self.sl.wait_and_get_text(self.PASSWORD_REG_LABEL)
+
+    def get_breadcrumb(self):
+        return self.sl.wait_and_get_text(self.BREADCRUMB)
+
+    def get_my_account_page_title(self):
+        return self.sl.wait_and_get_text(self.PAGE_TITLE)

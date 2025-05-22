@@ -1,4 +1,4 @@
-
+import allure
 import pytest
 import os
 import logging as logger
@@ -81,3 +81,92 @@ def init_driver(request):
     yield
 
     driver.quit()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """
+    Hook to capture and attach screenshots for failed frontend tests.
+    Screenshots are attached to both pytest-html and Allure reports.
+    Screenshots are only captured for tests that use the 'init_driver' fixture
+    and only when the test fails or is marked as xfail but skipped.
+    """
+    pytest_html = item.config.pluginmanager.getplugin("html")
+    outcome = yield
+    report = outcome.get_result()
+    extra = getattr(report, "extra", [])
+
+    if report.when in ["setup", "call", "teardown"]:
+        # Check if test failed or was skipped with xfail
+        xfail = hasattr(report, "wasxfail")
+        test_failed = (report.skipped and xfail) or (report.failed and not xfail)
+
+        if test_failed:
+            # Check if this is a frontend test (uses browser)
+            is_frontend_test = 'init_driver' in item.fixturenames
+
+            if is_frontend_test:
+                try:
+                    # Access the driver directly from the class if available
+                    driver = getattr(item.instance, 'driver', None)
+                    if driver:
+                        logger.info(f"Capturing screenshot for failed test: {item.name}")
+                        screenshot_base64 = driver.get_screenshot_as_base64()
+                        extra.append(pytest_html.extras.image(screenshot_base64))
+
+                        # Capture and add screenshot for Allure report
+                        screenshot_png = driver.get_screenshot_as_png()
+                        # Use item.config.workerinput to create unique screenshot path
+                        worker_id = item.config.workerinput['workerid'] if hasattr(item.config,
+                                                                                   'workerinput') else 'main'
+                        results_dir = os.environ.get("RESULTS_DIR", "/tmp/test_results")
+                        os.makedirs(results_dir, exist_ok=True)
+                        screenshot_path = os.path.join(results_dir, f"{item.name}_{worker_id}.png")
+                        with open(screenshot_path, "wb") as f:
+                            f.write(screenshot_png)
+                        allure.attach.file(screenshot_path, name='screenshot',
+                                           attachment_type=allure.attachment_type.PNG)
+                        extra.append(pytest_html.extras.url(screenshot_path, name="🔗 Open Screenshot"))
+                    else:
+                        logger.error(f"Driver not found for test {item.name}")
+                        error_html = f"<div class='image' style='color: red; border: 2px solid #e74c3c; padding: 10px;'>⚠️ Driver not found</div>"
+                        extra.append(pytest_html.extras.html(error_html))
+
+                    # Get screenshot as PNG for Allure
+                    screenshot_png = driver.get_screenshot_as_png()
+                    allure.attach(
+                        screenshot_png,
+                        name=f"{item.name}_screenshot",
+                        attachment_type=allure.attachment_type.PNG
+                    )
+
+                    # Add test name and error message to Allure report
+                    allure.attach(
+                        f"Test: {item.name}\nError: {report.longrepr}",
+                        name="Test Details",
+                        attachment_type=allure.attachment_type.TEXT
+                    )
+
+                except Exception as e:
+                    error_msg = f"Failed to capture screenshot: {str(e)}"
+                    logger.error(f"{error_msg} for test {item.name}")
+
+                    # Add error message to pytest-html report
+                    error_html = f"""
+                        <div class="image" style="color: red; border: 2px solid #e74c3c; padding: 10px; text-align: center; width: 320px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">⚠️</div>
+                            {error_msg}
+                        </div>
+                    """
+                    extra.append(pytest_html.extras.html(error_html))
+
+                    # Add error message to Allure report
+                    allure.attach(
+                        error_msg,
+                        name="Screenshot Error",
+                        attachment_type=allure.attachment_type.TEXT
+                    )
+
+    report.extra = extra
+
+
