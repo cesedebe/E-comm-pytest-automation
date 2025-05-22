@@ -45,6 +45,7 @@ def generate_random_coupon_code(sufix=None, length=10):
     if sufix:
         code += sufix
 
+    logger.debug(f"Randomly generated coupon code: {code}")
     return code
 
 def generate_random_string(length=10, prefix=None, suffix=None):
