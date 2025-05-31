@@ -63,3 +63,7 @@ class MyAccountSignedOutPage(MyAccountSignedOutPageLocators):
 
     def get_my_account_page_title(self):
         return self.sl.wait_and_get_text(self.PAGE_TITLE)
+
+    def click_lost_your_password(self):
+        return self.sl.wait_and_click(self.LOST_YOUR_PASSWORD)
+
