@@ -30,7 +30,7 @@ jobs:
           
           export DB_PASSWORD=SpecialStudentsSecret
           
-          export PYTHONPATH=$(pwd)
+          export PYTHONPATH=/home/runner/work/E-comm-pytest-automation/E-comm-pytest-automation
 
       - name: Run Tests
         run:
