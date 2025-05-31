@@ -32,6 +32,7 @@ jobs:
   
       - name: Run Tests
         run: |
+            env
             cd demostore_automation
             pytest -m besmoke
           
