@@ -28,7 +28,7 @@ jobs:
           
 
       - name: Set PYTHONPATH
-        env:  # 👈 Set environment variables here
+        env:  # 
           PYTHONPATH: ${{ github.workspace }}
   
       - name: Run Tests
