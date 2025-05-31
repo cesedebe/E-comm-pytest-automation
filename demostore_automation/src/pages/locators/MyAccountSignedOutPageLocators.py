@@ -23,3 +23,4 @@ class MyAccountSignedOutPageLocators:
 
     BREADCRUMB = (By.CLASS_NAME, 'woocommerce-breadcrumb')
     PAGE_TITLE = (By.CLASS_NAME, 'entry-title')
+    LOST_YOUR_PASSWORD = (By.CSS_SELECTOR, '#content > div > div.woocommerce > ul > li > a')
