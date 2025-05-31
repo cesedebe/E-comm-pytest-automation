@@ -352,7 +352,7 @@ Allure reports provide:
 This framework integrates with:
 - **GitLab CI** via `.gitlab-ci.yml`
 - **Jenkins** using a `Jenkinsfile` located in the root directory
-- **GitHub Actions** using `.github/workflows/tests.yml`
+- **GitHub Actions** using `.github/workflows/main.yml`
 
 Each pipeline automatically:
 - Installs dependencies
