@@ -1,0 +1,42 @@
+name: E-commerce-pytest
+
+on: [pull_request]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          
+      - name: Install Dependencies
+        run: 
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Setup Environment Variables
+        run: 
+          source ./variables_local.env
+          export WOO_KEY=ck_cf778eee9bde12fa549ce0fc32de681d541860d1
+          export WOO_SECRET=cs_0fb682cb8543c503dbed184a2e69a10ea1033122
+          export DB_USER=automation_user_dev
+          export DB_PASSWORD=SpecialStudentsSecret
+          export PYTHONPATH=$(pwd)
+
+      - name: Run Tests
+        run:
+          cd demostore_automation
+          pytest -m besmoke
+          
+            
+        
+        
+
+      
+      
+
