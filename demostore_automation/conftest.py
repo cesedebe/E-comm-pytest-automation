@@ -1,11 +1,13 @@
 import allure
 import pytest
 import os
+import sys
 import logging as logger
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChOptions
 from selenium.webdriver.firefox.options import Options as FFOptions
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
 
 @pytest.fixture(scope="class")
 def init_driver(request):
