@@ -1,0 +1,51 @@
+name: E-commerce-pytest
+
+on: [push, pull_request]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          
+      - name: Install Dependencies
+        run: 
+          pip install -r requirements.txt
+
+      - name: Setup Environment Variables
+        env:
+          RESULTS_DIR: "test-results"
+          BASE_URL: "http://dev.bootcamp.store.supersqa.com"
+          DB_PORT: "3308"
+          DB_HOST: "dev.bootcamp.store.supersqa.com"
+          DB_DATABASE: "demostore"
+          DB_TABLE_PREFIX: "wp_"
+          WOO_KEY: ${{ secrets.WOO_KEY }}
+          WOO_SECRET: ${{ secrets.WOO_SECRET }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          
+
+      - name: Set PYTHONPATH
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+  
+      - name: Run Tests
+        run: |
+            env
+            cd demostore_automation
+            pytest -m besmoke
+          
+            
+        
+        
+
+      
+      
+
