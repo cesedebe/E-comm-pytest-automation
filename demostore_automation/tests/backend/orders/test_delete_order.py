@@ -36,7 +36,7 @@ def test_delete_an_order_with_force_flag():
 @pytest.mark.tcid301
 def test_delete_a_none_existing_order():
     #get random order ID
-    random_string = ''.join(random.choices('0123456789', k=4))
+    random_string = ''.join(random.choices('0123456789', k=5))
     print(random_string)
 
     # create payload for delete request

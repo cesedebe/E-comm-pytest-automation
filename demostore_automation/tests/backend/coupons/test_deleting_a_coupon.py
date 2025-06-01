@@ -35,7 +35,7 @@ def test_delete_a_coupon_with_force_flag():
 @pytest.mark.tcid78
 def test_delete_a_none_existing_coupon():
     #get random coupon ID
-    random_string = ''.join(random.choices('0123456789', k=4))
+    random_string = ''.join(random.choices('0123456789', k=5))
 
     # create payload for delete request
     woo_helper = WooAPIUtility()
