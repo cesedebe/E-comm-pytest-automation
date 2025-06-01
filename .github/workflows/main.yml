@@ -20,6 +20,12 @@ jobs:
 
       - name: Setup Environment Variables
         env:
+          RESULTS_DIR: "test-results"
+          BASE_URL: "http://dev.bootcamp.store.supersqa.com"
+          DB_PORT: "3308"
+          DB_HOST: "dev.bootcamp.store.supersqa.com"
+          DB_DATABASE: "demostore"
+          DB_TABLE_PREFIX: "wp_"
           WOO_KEY: ${{ secrets.WOO_KEY }}
           WOO_SECRET: ${{ secrets.WOO_SECRET }}
           DB_USER: ${{ secrets.DB_USER }}
