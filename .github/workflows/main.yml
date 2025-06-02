@@ -110,7 +110,7 @@ jobs:
         run: |
             env
             cd demostore_automation
-            pytest -m beregression
+            
 
 
   run-backend-regression-tests:
