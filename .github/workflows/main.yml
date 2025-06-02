@@ -1,5 +1,6 @@
 name: E-commerce-pytest
 
+
 on: [push, pull_request]
 
 env:
@@ -14,6 +15,7 @@ env:
   DB_USER: ${{ secrets.DB_USER }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   PYTHONPATH: ${{ github.workspace }}
+
 
 jobs:
 
@@ -39,9 +41,11 @@ jobs:
         run: 
           pip install -r requirements.txt
 
+
       - name: Check Environment Variables
         run:
           env
+
   
       - name: Run Tests
         run: |
