@@ -60,6 +60,13 @@ def test_delete_a_none_existing_customer():
     #get random customer ID
     random_string = ''.join(random.choices('0123456789', k=5))
 
+    #check if id is non-existent
+    c_helper = CustomersDAO()
+    db_info = c_helper.get_customer_by_id(random_string)
+    while len(db_info) != 0 :
+        random_string = ''.join(random.choices('0123456789', k=5))
+        db_info = c_helper.get_customer_by_id( random_string )
+
     # create payload for delete request
     woo_helper = WooAPIUtility()
     payload = {

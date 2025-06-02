@@ -57,6 +57,13 @@ def test_delete_a_none_existing_product():
     #get random product ID
     random_string = ''.join(random.choices('0123456789', k=4))
 
+    # check if id is non-existent
+    c_helper = ProductsDAO()
+    db_info = c_helper.get_product_by_id(random_string)
+    while len(db_info) != 0:
+        random_string = ''.join(random.choices('0123456789', k=4))
+        db_info = c_helper.get_product_by_id(random_string)
+
     # create payload for delete request
     woo_helper = WooAPIUtility()
     payload = {
