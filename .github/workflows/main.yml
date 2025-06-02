@@ -16,8 +16,16 @@ env:
   PYTHONPATH: ${{ github.workspace }}
 
 jobs:
-  test:
 
+  deploy-to-test-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to test environment
+        run: echo "Deploying to test server..."
+
+
+  run-smoke-tests-in-test-environment:
+    needs: deploy-to-test-environment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +50,46 @@ jobs:
             pytest -m besmoke
           
             
-        
+  deploy-to-staging-environment:
+    needs: run-smoke-tests-in-test-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to staging environment
+        run: echo "Deploying to staging server..."
+
+  run-regression-tests-in-staging-environment:
+    needs: deploy-to-staging-environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run:
+          pip install -r requirements.txt
+
+      - name: Check Environment Variables
+        run:
+          env
+
+      - name: Run Tests
+        run: |
+            env
+            cd demostore_automation
+            pytest -m beregression
+
+  deploy-to-production-environment:
+    needs: run-smoke-tests-in-test-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production environment
+        run: echo "Deploying to production server..."
+
+
         
 
       
