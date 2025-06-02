@@ -39,6 +39,14 @@ def test_delete_a_none_existing_order():
     random_string = ''.join(random.choices('0123456789', k=5))
     print(random_string)
 
+    # check if id is non-existent
+    c_helper = OrdersDAO()
+    db_info = c_helper.get_order_lines_by_order_id(random_string)
+    while len(db_info) != 0:
+        random_string = ''.join(random.choices('0123456789', k=5))
+        db_info = c_helper.get_order_lines_by_order_id(random_string)
+
+
     # create payload for delete request
     woo_helper = WooAPIUtility()
     payload = {

@@ -18,8 +18,16 @@ env:
 
 
 jobs:
-  test:
 
+  deploy-to-test-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to test environment
+        run: echo "Deploying to test server..."
+
+
+  run-frontend-smoke-tests:
+    needs: deploy-to-test-environment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,10 +51,102 @@ jobs:
         run: |
             env
             cd demostore_automation
-            pytest -m besmoke
-          
             
-        
+          
+  run-backend-smoke-tests:
+    needs: deploy-to-test-environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run:
+          pip install -r requirements.txt
+
+
+      - name: Check Environment Variables
+        run:
+          env
+
+
+      - name: Run Tests
+        run: |
+            env
+            cd demostore_automation
+            pytest -m besmoke
+
+  deploy-to-staging-environment:
+    needs: [run-backend-smoke-tests, run-frontend-smoke-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to staging environment
+        run: echo "Deploying to staging server..."
+
+  run-frontend-regression-tests:
+    needs: deploy-to-staging-environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run:
+          pip install -r requirements.txt
+
+      - name: Check Environment Variables
+        run:
+          env
+
+      - name: Run Tests
+        run: |
+            env
+            cd demostore_automation
+            
+
+
+  run-backend-regression-tests:
+    needs: deploy-to-staging-environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run:
+          pip install -r requirements.txt
+
+      - name: Check Environment Variables
+        run:
+          env
+
+      - name: Run Tests
+        run: |
+            env
+            cd demostore_automation
+            pytest -m beregression
+          
+
+  deploy-to-production:
+    needs: [run-backend-regression-tests, run-frontend-regression-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to production environment
+        run: echo "Deploying to production server..."
+
+
         
 
       

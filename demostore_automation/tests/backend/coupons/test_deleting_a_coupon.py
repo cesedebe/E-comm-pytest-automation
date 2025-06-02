@@ -37,6 +37,14 @@ def test_delete_a_none_existing_coupon():
     #get random coupon ID
     random_string = ''.join(random.choices('0123456789', k=5))
 
+    #check if id is non-existent
+    coupon_helper = CouponsDAO()
+    db_info = coupon_helper.get_coupon_by_id(random_string)
+
+    while len(db_info) != 0 :
+        random_string = ''.join(random.choices('0123456789', k=5))
+        db_info = coupon_helper.get_coupon_by_id(random_string)
+
     # create payload for delete request
     woo_helper = WooAPIUtility()
     payload = {

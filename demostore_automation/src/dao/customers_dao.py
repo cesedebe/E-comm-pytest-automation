@@ -17,6 +17,14 @@ class CustomersDAO:
 
         return rs_sql
 
+    def get_customer_by_id(self, identification):
+        sql = f"""SELECT * FROM {self.db_helper.database}.{self.db_helper.table_prefix}users 
+                  WHERE ID = '{identification}';"""
+
+        rs_sql = self.db_helper.execute_select(sql)
+
+        return rs_sql
+
     def get_random_customer_from_db(self, qty=1):
         sql = f"SELECT user_email FROM {self.db_helper.database}.{self.db_helper.table_prefix}users order by id desc LIMIT 1000;"
         rs_sql = self.db_helper.execute_select(sql)
