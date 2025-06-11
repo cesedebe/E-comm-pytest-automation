@@ -1,5 +1,3 @@
-
-
 from demostore_automation.src.utilities.dbUtility import DBUtility
 import random
 import logging as logger
