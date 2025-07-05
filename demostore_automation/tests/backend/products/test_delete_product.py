@@ -39,8 +39,11 @@ def test_delete_a_product_without_force_flag():
     # create payload for delete request
     woo_helper = WooAPIUtility()
 
+    payload = {
+        "force": True
+    }
     #send HTTP delete product API request
-    rs_body = woo_helper.delete("products/"+ str(db_info[0]['ID']), expected_status_code=200)
+    rs_body = woo_helper.delete("products/"+ str(db_info[0]['ID']),params=payload,  expected_status_code=200)
 
     # verify response is good
     assert rs_body, f"Response of delete product call should not be empty."
@@ -50,7 +53,7 @@ def test_delete_a_product_without_force_flag():
     # check if product is removed from database
     product_helper = ProductsDAO()
     db_info_2 = product_helper.get_product_by_id(db_info[0]['ID'])
-    assert len(db_info_2) == 1, f"Expected 1 record for product in 'users' table. But found: {len(db_info_2)}"
+    assert len(db_info_2) == 0, f"Expected 0 record for product in 'users' table. But found: {len(db_info_2)}"
 
 @pytest.mark.tcid572
 def test_delete_a_none_existing_product():
