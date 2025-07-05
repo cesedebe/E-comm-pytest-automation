@@ -47,8 +47,17 @@ def test_get_coupon_by_id():
 
 @pytest.mark.tcid876
 def test_get_coupon_by_invalid_id():
-    #get random coupon ID
+
+    # get random coupon ID
     random_string = ''.join(random.choices('0123456789', k=4))
+
+    # Ensure id is non-existent
+    c_helper =  CouponsDAO()
+    db_info = c_helper.get_coupon_by_id(random_string)
+    while len(db_info) != 0:
+        random_string = ''.join(random.choices('0123456789', k=4))
+        db_info = c_helper.get_product_by_id(random_string)
+
 
     # create payload for delete request
     woo_helper = WooAPIUtility()

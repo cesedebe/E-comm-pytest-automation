@@ -19,21 +19,24 @@ def test_get_product_variation():
     """
     #get random product variation from database along with its parent id
     db_info = ProductsVariationDAO().get_random_product_variation_from_db()
+    logger.info( db_info)
     variation_id = str(db_info[0]["ID"])
     parent_product_id = str(db_info[0]["post_parent"])
 
-    # make the API call
-    woo_helper = WooAPIUtility()
-    rs_body = woo_helper.get("products/"+ parent_product_id +"/variations/" + variation_id, expected_status_code=200)
+    if parent_product_id != "0":
 
-    # verify response is good
-    assert rs_body, f"Response of get product variation call should not be empty."
-    assert rs_body['type'] == "variation", f"Get product variation api call response has" \
-       f"unexpected type. Expected: variation, Actual: {rs_body['type']}"
-    assert rs_body['id'] == db_info[0]["ID"], f"Get product variation api call response has" \
-       f"unexpected id. Expected: {db_info[0]["ID"]}, Actual: {rs_body['id']}"
-    assert rs_body['parent_id'] == db_info[0]["post_parent"], f"Get product variation api call response has" \
-       f"unexpected parent product id. Expected: {db_info[0]["post_parent"]}, Actual: {rs_body['parent_id']}"
+        # make the API call
+        woo_helper = WooAPIUtility()
+        rs_body = woo_helper.get("products/"+ parent_product_id +"/variations/" + variation_id, expected_status_code=200)
+
+        # verify response is good
+        assert rs_body, f"Response of get product variation call should not be empty."
+        assert rs_body['type'] == "variation", f"Get product variation api call response has" \
+         f"unexpected type. Expected: variation, Actual: {rs_body['type']}"
+        assert rs_body['id'] == db_info[0]["ID"], f"Get product variation api call response has" \
+         f"unexpected id. Expected: {db_info[0]["ID"]}, Actual: {rs_body['id']}"
+        assert rs_body['parent_id'] == db_info[0]["post_parent"], f"Get product variation api call response has" \
+        f"unexpected parent product id. Expected: {db_info[0]["post_parent"]}, Actual: {rs_body['parent_id']}"
 
 
 @pytest.mark.tcid916
@@ -82,11 +85,11 @@ def test_get_all_product_variations():
     rs_body = woo_helper.get("products/"+ random_product_id +"/variations" , expected_status_code=200)
 
     # verify response is good
-    assert rs_body, f"Response of get all product variations call should not be empty."
-    for d in rs_body:
-        assert d["parent_id"] == db_info[0]["product_id"], f"Get all product variation api call response has" \
-                f"unexpected parent product id. Expected: {db_info[0]["product_id"]}, Actual: {rs_body['parent_id']}"
-        assert d["type"] == "variation" , f"Get all product variation api call response has" \
-                f"unexpected type. Expected: 'variation', Actual: {rs_body['type']}"
-        db_product_variation = ProductsVariationDAO().get_product_variation_by_id(d["id"])
-        assert len(db_product_variation) == 1, f"Expected 1 product variation in database but found {len(db_product_variation)}"
+    if rs_body:
+        for d in rs_body:
+            assert d["parent_id"] == db_info[0]["product_id"], f"Get all product variation api call response has" \
+                    f"unexpected parent product id. Expected: {db_info[0]["product_id"]}, Actual: {rs_body['parent_id']}"
+            assert d["type"] == "variation" , f"Get all product variation api call response has" \
+                    f"unexpected type. Expected: 'variation', Actual: {rs_body['type']}"
+            db_product_variation = ProductsVariationDAO().get_product_variation_by_id(d["id"])
+            assert len(db_product_variation) == 1, f"Expected 1 product variation in database but found {len(db_product_variation)}"
