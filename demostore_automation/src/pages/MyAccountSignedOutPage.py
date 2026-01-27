@@ -66,4 +66,8 @@ class MyAccountSignedOutPage(MyAccountSignedOutPageLocators):
 
     def click_lost_your_password(self):
         return self.sl.wait_and_click(self.LOST_YOUR_PASSWORD)
+    
+    def check_validation_message_email_address(self, exp_err):
+        element = self.sl.wait_and_get_elements(self.REGISTER_EMAIL)
+        assert (element[0].get_attribute("validationMessage").startswith(exp_err)), "Test Fail:  Validation message incorrect"
 
